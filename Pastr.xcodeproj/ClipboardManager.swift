@@ -29,6 +29,7 @@ struct ClipboardItem: Identifiable, Hashable {
 /// the state required by the UI, such as search text and filtering options.
 @MainActor
 class ClipboardManager: ObservableObject {
+    // MARK: - Published Properties
     
     // The complete, unfiltered list of all clipboard items. This is the source of truth.
     @Published private(set) var clipboardItems: [ClipboardItem] = []
@@ -117,24 +118,13 @@ class ClipboardManager: ObservableObject {
     private func checkForChanges() {
         guard pasteboard.changeCount != lastChangeCount else { return }
         lastChangeCount = pasteboard.changeCount
-        
-        // Get the original string from the pasteboard.
-        guard let originalString = pasteboard.string(forType: .string) else { return }
-
-        // Trim only the leading whitespace.
-        let copiedString = String(originalString.drop { $0.isWhitespace })
-        
-        // If the resulting string is empty (e.g., user copied only spaces), do nothing.
-        guard !copiedString.isEmpty else { return }
-        
-        // Check for duplicates using the trimmed string.
+        guard let copiedString = pasteboard.string(forType: .string) else { return }
         if let lastItem = clipboardItems.first(where: { !$0.isPinned }), lastItem.content == copiedString {
             return
         }
 
         let historyWasEmpty = self.historyItems.isEmpty
 
-        // Analyze and store the trimmed string.
         let (type, subtitle) = ContentAnalyzer.analyze(string: copiedString)
         let newItem = ClipboardItem(content: copiedString, type: type, subtitle: subtitle)
         let firstUnpinnedIndex = clipboardItems.firstIndex(where: { !$0.isPinned }) ?? clipboardItems.endIndex
@@ -149,6 +139,7 @@ class ClipboardManager: ObservableObject {
     
     /// Starts a single session countdown. This is called when the first item is added.
     private func startSessionTimer() {
+        // Ensure there isn't already a timer running.
         sessionManagementTask?.cancel()
         
         sessionManagementTask = Task {
