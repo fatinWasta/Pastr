@@ -67,4 +67,5 @@ Pastr is built around a central data model and a declarative UI, following moder
 
 ---
 Made with ❤️ and Swift.
+
 Fatin.
