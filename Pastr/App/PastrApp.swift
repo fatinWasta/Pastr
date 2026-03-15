@@ -12,8 +12,11 @@ import SwiftUI
 struct PastrApp: App {
     @StateObject private var clipboardManager = ClipboardManager()
 
+    // Connect to the AppDelegate, which will manage the app's lifecycle and global state.
+
     var body: some Scene {
         MenuBarExtra {
+            // Provide the single ClipboardManager instance from the AppDelegate to the SwiftUI environment.
             ContentView()
                 .environmentObject(clipboardManager)
                 .onDisappear {
