@@ -16,7 +16,7 @@ struct SearchAndFilterView: View {
     private let filters: [ContentType] = [.codeSnippet, .url, .token]
 
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(alignment: .leading, spacing: 12) {
             searchBar
             filterButtons
         }
@@ -36,7 +36,7 @@ struct SearchAndFilterView: View {
     }
     
     private var filterButtons: some View {
-        HStack {
+        HStack() {
             FilterButton(title: "All", isSelected: selectedFilter == nil) {
                 selectedFilter = nil
             }
