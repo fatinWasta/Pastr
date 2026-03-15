@@ -3,7 +3,7 @@
 
 Pastr is a lightweight, local session-based clipboard manager built for macOS. It lives in your menu bar, providing quick access to your recent clipboard history with intelligent content detection and a clean, modern interface. 
 
-
+[How it Looks] <img src="Screenshot/pastrApp.png" width="450">
 ---
 
 ## ✨ Features
