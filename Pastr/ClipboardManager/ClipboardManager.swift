@@ -145,7 +145,7 @@ class ClipboardManager: ObservableObject {
         // Create and insert the new item.
         let (type, subtitle) = ContentAnalyzer.analyze(string: copiedString)
         let newItem = ClipboardItem(content: copiedString, type: type, subtitle: subtitle)
-        self.recentlyCopiedItemID = newItem.id // Mark the new item as recently copied.
+        self.recentlyCopiedItemID = newItem.id
         
         let firstUnpinnedIndex = clipboardItems.firstIndex(where: { !$0.isPinned }) ?? clipboardItems.endIndex
         clipboardItems.insert(newItem, at: firstUnpinnedIndex)

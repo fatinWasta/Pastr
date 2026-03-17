@@ -10,7 +10,8 @@ import SwiftUI
 
 struct ClipboardItemRow: View {
     let item: ClipboardItem
-    
+    let isMostRecentCopy: Bool
+
     // Actions are passed in from the parent view, promoting reusability.
     let onCopy: () -> Void
     let onPin: () -> Void
@@ -33,9 +34,16 @@ struct ClipboardItemRow: View {
             
             Spacer()
             
-            Text(item.createdAt.timeAgoDisplay())
-                .font(.caption)
-                .foregroundStyle(.secondary)
+            if isMostRecentCopy {
+                Text("Copied")
+                    .font(.caption.bold())
+                    .foregroundStyle(Color.accentColor)
+                    .transition(.opacity)
+            } else {
+                Text(item.createdAt.timeAgoDisplay())
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
             
             Button(action: onPin) {
                 Image(systemName: item.isPinned ? "pin.fill" : "pin")
