@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-/// A view that displays a single row in the clipboard history list.
 struct ClipboardItemRow: View {
     let item: ClipboardItem
     
@@ -60,7 +59,6 @@ struct ClipboardItemRow: View {
     }
 }
 
-/// A helper view that displays the icon for a specific content type.
 private struct ItemIconView: View {
     let type: ContentType
     
@@ -93,7 +91,6 @@ private struct ItemIconView: View {
     }
 }
 
-/// An extension to format a date as a relative time string (e.g., "5 minutes ago").
 extension Date {
     func timeAgoDisplay() -> String {
         let formatter = RelativeDateTimeFormatter()
