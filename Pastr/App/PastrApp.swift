@@ -14,6 +14,7 @@ struct PastrApp: App {
 
     var body: some Scene {
         MenuBarExtra {
+            // Provide the single ClipboardManager instance from the AppDelegate to the SwiftUI environment.
             ContentView()
                 .environmentObject(clipboardManager)
                 .onDisappear {

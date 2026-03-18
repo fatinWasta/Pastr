@@ -8,10 +8,10 @@
 
 import SwiftUI
 
-/// A view that displays a single row in the clipboard history list.
 struct ClipboardItemRow: View {
     let item: ClipboardItem
-    
+    let isMostRecentCopy: Bool
+
     // Actions are passed in from the parent view, promoting reusability.
     let onCopy: () -> Void
     let onPin: () -> Void
@@ -34,9 +34,16 @@ struct ClipboardItemRow: View {
             
             Spacer()
             
-            Text(item.createdAt.timeAgoDisplay())
-                .font(.caption)
-                .foregroundStyle(.secondary)
+            if isMostRecentCopy {
+                Text("Copied")
+                    .font(.caption.bold())
+                    .foregroundStyle(Color.accentColor)
+                    .transition(.opacity)
+            } else {
+                Text(item.createdAt.timeAgoDisplay())
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
             
             Button(action: onPin) {
                 Image(systemName: item.isPinned ? "pin.fill" : "pin")
@@ -60,7 +67,6 @@ struct ClipboardItemRow: View {
     }
 }
 
-/// A helper view that displays the icon for a specific content type.
 private struct ItemIconView: View {
     let type: ContentType
     
@@ -93,7 +99,6 @@ private struct ItemIconView: View {
     }
 }
 
-/// An extension to format a date as a relative time string (e.g., "5 minutes ago").
 extension Date {
     func timeAgoDisplay() -> String {
         let formatter = RelativeDateTimeFormatter()

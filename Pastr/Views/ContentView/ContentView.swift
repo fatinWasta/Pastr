@@ -16,7 +16,6 @@ struct ContentView: View {
         VStack(spacing: 0) {
             HeaderView(itemCount: manager.historyItems.count)
             SearchAndFilterView(searchText: $manager.searchText, selectedFilter: $manager.selectedFilter)
-            
             if manager.pinnedItems.isEmpty && manager.historyItems.isEmpty {
                 EmptyStateView()
             } else {
@@ -55,6 +54,7 @@ struct ContentView: View {
     private func row(for item: ClipboardItem) -> some View {
         ClipboardItemRow(
             item: item,
+            isMostRecentCopy: item.id == manager.recentlyCopiedItemID,
             onCopy: {
                 manager.copyToClipboard(item: item)
             },
